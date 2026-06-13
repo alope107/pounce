@@ -9,12 +9,14 @@ static const int spr_max_y = MAX_Y - radius;
 node::node(bn::fixed_point start) : 
                _spr(bn::sprite_items::node.create_sprite(start)),
                _velocity(bn::fixed_point(0, 0)),
-               _restitution(.3),
-               _gravity(bn::fixed_point(0, .2)) {
+               _restitution(.6),
+               _gravity(bn::fixed_point(0, .2)),
+               _friction(.95) {
 }
 
 void node::update() {
     _velocity += _gravity;
+    _velocity *= _friction;
     auto candidate = _spr.position() + _velocity;
     if (candidate.y() > spr_max_y) {
         candidate.set_y(spr_max_y);

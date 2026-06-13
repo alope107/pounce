@@ -19,6 +19,7 @@ void edge::exert() {
         return;
     }
     bn::fixed force = (_cur_dist - _ideal_dist) * _k;
+    // force = clamp(-2, 2, force);
 
     bn::fixed_point unit = (_end.position() - _start.position()) / _cur_dist;
 

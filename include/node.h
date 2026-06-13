@@ -15,4 +15,5 @@ private:
     bn::fixed_point _velocity;
     bn::fixed _restitution;
     bn::fixed_point _gravity;
+    bn::fixed _friction;
 };

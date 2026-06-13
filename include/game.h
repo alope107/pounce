@@ -5,8 +5,8 @@
 #include "cursor.h"
 #include "node.h"
 
-static constexpr int MAX_NODES = 50;
-static constexpr int MAX_EDGES = 50;
+static constexpr int MAX_NODES = 300;
+static constexpr int MAX_EDGES = 300;
 
 
 class game {
