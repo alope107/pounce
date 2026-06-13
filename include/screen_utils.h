@@ -21,3 +21,8 @@ inline bn::fixed_point clamp_point(int min_x, int min_y, int max_x, int max_y, b
 inline bn::fixed_point clamp_to_screen (bn::fixed_point point) {
     return clamp_point(MIN_X, MIN_Y, MAX_X, MAX_Y, point);
 }
+
+inline int tribool (bool neg, bool pos) {
+    if((neg && pos) || (!neg && !pos)) return 0;
+    return neg ? -1 : 1;
+}
