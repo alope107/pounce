@@ -5,8 +5,10 @@
 
 class node {
 public:
-    node();
+    node(bn::fixed_point start={0, 0});
+    void push(bn::fixed_point force);
     void update();
+    bn::fixed_point position();
 
 private:
     bn::sprite_ptr _spr;

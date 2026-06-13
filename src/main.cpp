@@ -3,6 +3,7 @@
 #include <bn_color.h>
 #include <bn_keypad.h>
 #include <bn_sprite_ptr.h>
+#include <bn_vector.h>
 
 #include "node.h"
 
@@ -10,11 +11,16 @@
 int main() {
     bn::core::init();
 
-    node ball = node();
-    // bn::sprite_ptr node = bn::sprite_items::node.create_sprite();
+
+    bn::vector<node, 10> nodes = {};
+
+    nodes.push_back(node({30, 0}));
+    nodes.push_back(node({10, -20}));
 
     while(true) {
-        ball.update();
+        for(node& node: nodes) {
+            node.update();
+        }
         bn::core::update();
     }
 }
