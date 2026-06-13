@@ -4,10 +4,12 @@
 #include <bn_keypad.h>
 
 #include "bn_sprite_items_cursor.h"
+#include "game.h"
 
-cursor::cursor(bn::fixed_point start, bn::fixed speed) 
-: _spr(bn::sprite_items::cursor.create_sprite(start)),
-  _speed(speed) {
+cursor::cursor(game& g, bn::fixed_point start, bn::fixed speed) 
+: _g(g),
+ _spr(bn::sprite_items::cursor.create_sprite(start)),
+  _speed(speed)  {
 }
 
 void cursor::update() {
@@ -18,4 +20,10 @@ void cursor::update() {
 
     bn::fixed_point new_pos = clamp_to_screen(_spr.position() + delta);
     _spr.set_position(new_pos);
+    
+    if(bn::keypad::a_pressed()) _spawn_node();
+}
+
+void cursor::_spawn_node() {
+    _g.emplace_node(_spr.position(), true);
 }
