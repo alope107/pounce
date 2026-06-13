@@ -2,19 +2,18 @@
 #include <bn_backdrop.h>
 #include <bn_color.h>
 #include <bn_keypad.h>
+#include <bn_sprite_ptr.h>
+
+#include "bn_sprite_items_node.h"
+
 
 int main() {
     bn::core::init();
 
-    bn::backdrop::set_color(bn::color(31, 0, 0));
+    bn::sprite_ptr node = bn::sprite_items::node.create_sprite();
 
     while(true) {
-        if(bn::keypad::a_pressed()) {
-            bn::backdrop::set_color(bn::color(0, 0, 30));
-        }
-        if(bn::keypad::b_pressed()) {
-            bn::backdrop::set_color(bn::color(0, 31, 0));
-        }
+
         bn::core::update();
     }
 }
