@@ -2,11 +2,15 @@
 
 #include "node.h"
 
+class game;
+
 class edge {
 public:
-    edge(node& start, node& end, bn::fixed k);
+    edge(game& g, node& start, node& end, bn::fixed k);
     void exert();
+    void draw();
 private:
+    game& _g;
     node& _start;
     node& _end;
     bn::fixed _k;

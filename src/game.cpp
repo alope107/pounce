@@ -1,17 +1,33 @@
 #include "game.h"
 #include "screen_utils.h"
 
-game::game() : _cursor(*this) {
+#include "bn_palette_bitmap_items_pal.h"
+
+#include <bn_keypad.h>
+
+game::game() : _bg(bn::palette_bitmap_bg_ptr::create(bn::palette_bitmap_items::pal.palette_item())),
+               _painter(_bg),
+                _cursor(*this) {
+    
+    reset();
+}
+
+void game::reset() {
+    _edges.clear();
+    _nodes.clear();
+
     _nodes.emplace_back(bn::fixed_point(30, 0));
     _nodes.emplace_back(bn::fixed_point(29, -40));
     _nodes.emplace_back(bn::fixed_point(15, -20));
 
-    _edges.emplace_back(_nodes[0], _nodes[1], .5);
-    _edges.emplace_back(_nodes[1], _nodes[2], .5);
-    _edges.emplace_back(_nodes[2], _nodes[0], .5);
+    _edges.emplace_back(*this, _nodes[0], _nodes[1], .5);
+    _edges.emplace_back(*this, _nodes[1], _nodes[2], .5);
+    _edges.emplace_back(*this, _nodes[2], _nodes[0], .5);
 }
 
 void game::update() {
+    if(bn::keypad::start_pressed()) reset();
+
     _cursor.update();
     for(edge& edge : _edges) {
         edge.exert();
@@ -19,6 +35,22 @@ void game::update() {
     for(node& node: _nodes) {
         node.update();
     }
+    
+    _painter.clear();
+    for(edge& edge : _edges) {
+        edge.draw();
+    }
+    _painter.flip_page_later();
+}
+
+void game::draw_line(const bn::fixed_point& start, const bn::fixed_point end) {
+    // Convert from game coordinates (origin at center)
+    // to screen coordinates (origin at top-left)
+    _painter.line(start.x().floor_integer() + MAX_X, 
+                  start.y().floor_integer() + MAX_Y,
+                  end.x().floor_integer() + MAX_X,
+                  end.y().floor_integer() + MAX_Y,
+                   7);
 }
 
 node& game::emplace_node(bn::fixed_point position, bool connect) {
@@ -29,7 +61,7 @@ node& game::emplace_node(bn::fixed_point position, bool connect) {
     if(connect) {
         for(auto it = _nodes.begin(); it < _nodes.end() -1; it++) {
             if(squared_dist(new_node.position(), it->position()) < squared_connect_thresh) {
-                _edges.emplace_back(new_node, *it, .5);
+                _edges.emplace_back(*this, new_node, *it, .5);
             }
         }
     }

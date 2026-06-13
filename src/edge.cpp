@@ -3,9 +3,12 @@
 #include "screen_utils.h"
 // TODO: Probably lots of math optimizations!
 
+#include "game.h"
 
 
-edge::edge(node& start, node& end, bn::fixed k) :
+
+edge::edge(game& g, node& start, node& end, bn::fixed k) :
+    _g(g),
     _start(start),
     _end(end),
     _k(k),
@@ -19,10 +22,13 @@ void edge::exert() {
         return;
     }
     bn::fixed force = (_cur_dist - _ideal_dist) * _k;
-    // force = clamp(-2, 2, force);
 
     bn::fixed_point unit = (_end.position() - _start.position()) / _cur_dist;
 
     _start.push(unit * force);
     _end.push(unit * -force);
+}
+
+void edge::draw() {
+    _g.draw_line(_start.position(), _end.position());
 }
