@@ -1,6 +1,6 @@
 #include "game.h"
 #include "screen_utils.h"
-#include "vector_math.h"
+#include "arrow_math.h"
 
 #include "bn_palette_bitmap_items_pal.h"
 
@@ -25,12 +25,12 @@ void game::reset() {
     _edges.emplace_back(*this, _nodes[0], _nodes[1], .5);
     _edges.emplace_back(*this, _nodes[1], _nodes[2], .5);
     _edges.emplace_back(*this, _nodes[2], _nodes[0], .5);
+
+    _joints.emplace_back(_nodes[0], _nodes[1], _nodes[2], .001);
 }
 
 void game::update() {
     if(bn::keypad::start_pressed()) reset();
-
-    _scale.data();
 
     // TODO: tribool?
     if(bn::keypad::b_held() && bn::keypad::up_held()) {
@@ -47,8 +47,10 @@ void game::update() {
     _edges[2].set_scale(_scale);
 
     _cursor.update();
+    for(joint& joint : _joints) {
+        joint.exert();
+    }
     for(edge& edge : _edges) {
-        // edge.set_scale(_scale);
         edge.exert();
     }
     for(node& node: _nodes) {

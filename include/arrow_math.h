@@ -18,32 +18,32 @@ inline bn::fixed dist(const bn::fixed_point& a, const bn::fixed_point& b) {
     return bn::sqrt(squared_dist(a, b));
 }
 
-inline bn::fixed dot(arrow& u, arrow& v) {
+inline bn::fixed dot(const arrow& u, const arrow& v) {
     return u.x()*v.x() + u.y()*v.y();
 }
 
-inline bn::fixed cross(arrow& u, arrow& v) {
+inline bn::fixed cross(const arrow& u, const arrow& v) {
     return u.x()*v.y() - u.y()*v.x();
 }
 
-inline bn::fixed magnitude(arrow& vec) {
+inline bn::fixed magnitude(const arrow& vec) {
     return bn::sqrt(vec.x()*vec.x() + vec.y()*vec.y());
 }
 
 // Returns an arrow in the same direction with magnitude 1
 // TODO: Handle {0, 0} vector?
-inline arrow unit(arrow& vec) {
+inline arrow unit(const arrow& vec) {
     return vec / magnitude(vec);
 }
 
 // normal (perpendicular) with same magnitude
 // TODO: explore consequences of negating y vs x
-inline arrow normal(arrow& vec) {
+inline arrow normal(const arrow& vec) {
     return {-vec.y(), vec.x()};
 }
 
 // angle between 2 arrows
-bn::fixed angle(arrow& u, arrow& v) {
+bn::fixed angle(const arrow& u, const arrow& v) {
     // angle = atan2(||u x v||, u dot v)
 
     // atan2 requires num/denom as ints
@@ -62,7 +62,7 @@ bn::fixed angle(arrow& u, arrow& v) {
 }
 
 //angle between 3 points
-bn::fixed angle(bn::fixed_point& a, bn::fixed_point& hinge, bn::fixed_point& b) {
+bn::fixed angle(const bn::fixed_point& a, const bn::fixed_point& hinge, const bn::fixed_point& b) {
     arrow u = a - hinge;
     arrow v = b - hinge;
 

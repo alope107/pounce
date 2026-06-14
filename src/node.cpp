@@ -8,9 +8,9 @@ static const int spr_max_y = MAX_Y - radius;
 
 node::node(bn::fixed_point start) : 
                _spr(bn::sprite_items::node.create_sprite(start)),
-               _velocity(bn::fixed_point(0, 0)),
+               _velocity(arrow(0, 0)),
                _restitution(.6),
-               _gravity(bn::fixed_point(0, .2)),
+               _gravity(arrow(0, .2)),
                _friction(.99) {
     _spr.set_visible(false);
 }
@@ -26,7 +26,7 @@ void node::update() {
     _spr.set_position(candidate);
 }
 
-void node::push(bn::fixed_point force) {
+void node::push(arrow force) {
     _velocity += force;
 }
 

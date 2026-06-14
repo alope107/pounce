@@ -5,9 +5,11 @@
 #include "edge.h"
 #include "cursor.h"
 #include "node.h"
+#include "joint.h"
 
-static constexpr int MAX_NODES = 300;
-static constexpr int MAX_EDGES = 300;
+static constexpr int MAX_NODES = 50;
+static constexpr int MAX_EDGES = 100;
+static constexpr int MAX_JOINTS = 50;
 
 
 class game {
@@ -22,7 +24,7 @@ private:
     bn::palette_bitmap_bg_painter _painter;
     bn::vector<node, MAX_NODES> _nodes;
     bn::vector<edge, MAX_EDGES> _edges;
+    bn::vector<joint, MAX_JOINTS> _joints;
     cursor _cursor;
     bn::fixed _scale;
-    // node& _hypot;
 };
