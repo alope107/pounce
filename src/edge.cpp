@@ -1,7 +1,7 @@
 #include "edge.h"
 
 #include "screen_utils.h"
-#include "vector_math.h"
+#include "arrow_math.h"
 // TODO: Probably lots of math optimizations!
 
 #include "game.h"
@@ -26,7 +26,7 @@ void edge::exert() {
     }
     bn::fixed force = (_cur_dist - (_ideal_dist * _scale)) * _k;
 
-    bn::fixed_point unit = (_end.position() - _start.position()) / _cur_dist;
+    arrow unit = (_end.position() - _start.position()) / _cur_dist;
 
     _start.push(unit * force);
     _end.push(unit * -force);
