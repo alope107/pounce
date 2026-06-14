@@ -1,5 +1,6 @@
 #include "game.h"
 #include "screen_utils.h"
+#include "vector_math.h"
 
 #include "bn_palette_bitmap_items_pal.h"
 
@@ -7,7 +8,8 @@
 
 game::game() : _bg(bn::palette_bitmap_bg_ptr::create(bn::palette_bitmap_items::pal.palette_item())),
                _painter(_bg),
-                _cursor(*this) {
+                _cursor(*this),
+                _scale(1) {
     
     reset();
 }
@@ -28,14 +30,31 @@ void game::reset() {
 void game::update() {
     if(bn::keypad::start_pressed()) reset();
 
+    _scale.data();
+
+    // TODO: tribool?
+    if(bn::keypad::b_held() && bn::keypad::up_held()) {
+        _scale += .01;
+    }
+    if(bn::keypad::b_held() && bn::keypad::down_held()) {
+        _scale -= .01;
+    }
+
+    if(bn::keypad::b_released()) {
+        _scale = 1;
+    }
+
+    _edges[2].set_scale(_scale);
+
     _cursor.update();
     for(edge& edge : _edges) {
+        // edge.set_scale(_scale);
         edge.exert();
     }
     for(node& node: _nodes) {
         node.update();
     }
-    
+
     _painter.clear();
     for(edge& edge : _edges) {
         edge.draw();

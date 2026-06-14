@@ -23,4 +23,6 @@ private:
     bn::vector<node, MAX_NODES> _nodes;
     bn::vector<edge, MAX_EDGES> _edges;
     cursor _cursor;
+    bn::fixed _scale;
+    // node& _hypot;
 };

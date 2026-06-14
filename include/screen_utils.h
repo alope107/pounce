@@ -27,13 +27,3 @@ inline int tribool (bool neg, bool pos) {
     if((neg && pos) || (!neg && !pos)) return 0;
     return neg ? -1 : 1;
 }
-
-inline bn::fixed squared_dist(const bn::fixed_point& a, const bn::fixed_point& b) {
-    bn::fixed dx = a.x() - b.x();
-    bn::fixed dy = a.y() - b.y();
-    return dx*dx + dy*dy;
-}
-
-inline bn::fixed dist(const bn::fixed_point& a, const bn::fixed_point& b) {
-    return bn::sqrt(squared_dist(a, b));
-}
