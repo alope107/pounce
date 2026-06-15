@@ -24,13 +24,14 @@ void game::reset() {
 
     _edges.emplace_back(*this, _nodes[0], _nodes[1], .5);
     _edges.emplace_back(*this, _nodes[1], _nodes[2], .5);
-    _edges.emplace_back(*this, _nodes[2], _nodes[0], .5);
+    //_edges.emplace_back(*this, _nodes[2], _nodes[0], .5);
 
-    _joints.emplace_back(_nodes[0], _nodes[1], _nodes[2], .05);
+    _joints.emplace_back(*this, _nodes[0], _nodes[1], _nodes[2], 7, true);
     _base_joint_angle = _joints[0].ideal_angle();
 }
 
 void game::update() {
+    _painter.clear();
     if(bn::keypad::start_pressed()) reset();
 
     // TODO: tribool?
@@ -58,21 +59,21 @@ void game::update() {
         node.update();
     }
 
-    _painter.clear();
+    
     for(edge& edge : _edges) {
         edge.draw();
     }
     _painter.flip_page_later();
 }
 
-void game::draw_line(const bn::fixed_point& start, const bn::fixed_point end) {
+void game::draw_line(const bn::fixed_point& start, const bn::fixed_point& end, int color_idx) {
     // Convert from game coordinates (origin at center)
     // to screen coordinates (origin at top-left)
     _painter.line(start.x().floor_integer() + MAX_X, 
                   start.y().floor_integer() + MAX_Y,
                   end.x().floor_integer() + MAX_X,
                   end.y().floor_integer() + MAX_Y,
-                   7);
+                   color_idx);
 }
 
 node& game::emplace_node(bn::fixed_point position, bool connect) {

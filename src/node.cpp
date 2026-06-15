@@ -3,7 +3,7 @@
 
 #include "bn_sprite_items_node.h"
 
-static const int radius = 0;//= 8; // setting to 0 while sprites are hidden
+static const int radius = 30;//0;//= 8; // setting to 0 while sprites are hidden
 static const int spr_max_y = MAX_Y - radius;
 
 node::node(bn::fixed_point start) : 
@@ -16,7 +16,7 @@ node::node(bn::fixed_point start) :
 }
 
 void node::update() {
-    _velocity += _gravity;
+    // _velocity += _gravity;
     _velocity *= _friction;
     auto candidate = _spr.position() + _velocity;
     if (candidate.y() > spr_max_y) {
