@@ -26,7 +26,7 @@ void game::reset() {
     _edges.emplace_back(*this, _nodes[1], _nodes[2], .5);
     //_edges.emplace_back(*this, _nodes[2], _nodes[0], .5);
 
-    _joints.emplace_back(*this, _nodes[0], _nodes[1], _nodes[2], 7, true);
+    _joints.emplace_back(*this, _nodes[0], _nodes[1], _nodes[2], 30, true);
     _base_joint_angle = _joints[0].ideal_angle();
 }
 

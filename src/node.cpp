@@ -10,13 +10,13 @@ node::node(bn::fixed_point start) :
                _spr(bn::sprite_items::node.create_sprite(start)),
                _velocity(arrow(0, 0)),
                _restitution(.6),
-               _gravity(arrow(0, .2)),
+               _gravity(arrow(0, .05)),
                _friction(.99) {
     _spr.set_visible(false);
 }
 
 void node::update() {
-    // _velocity += _gravity;
+    _velocity += _gravity;
     _velocity *= _friction;
     auto candidate = _spr.position() + _velocity;
     if (candidate.y() > spr_max_y) {
