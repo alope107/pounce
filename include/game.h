@@ -27,4 +27,7 @@ private:
     bn::vector<joint, MAX_JOINTS> _joints;
     cursor _cursor;
     bn::fixed _scale;
+
+    //temp
+    bn::fixed _base_joint_angle;
 };
