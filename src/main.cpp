@@ -1,11 +1,11 @@
 #include <bn_core.h>
 
-#include "game.h"
+#include "jump_game.h"
 
 
 int main() {
     bn::core::init();
-    game g = game();
+    jump_game g = jump_game();
     
     while(true) {
         g.update();

@@ -1,4 +1,4 @@
-#include "game.h"
+#include "jump_game.h"
 #include "screen_utils.h"
 #include "arrow_math.h"
 
@@ -6,7 +6,7 @@
 
 #include <bn_keypad.h>
 
-game::game() : _bg(bn::palette_bitmap_bg_ptr::create(bn::palette_bitmap_items::pal.palette_item())),
+jump_game::jump_game() : _bg(bn::palette_bitmap_bg_ptr::create(bn::palette_bitmap_items::pal.palette_item())),
                _painter(_bg),
                 _cursor(*this),
                 _scale(1) {
@@ -14,7 +14,7 @@ game::game() : _bg(bn::palette_bitmap_bg_ptr::create(bn::palette_bitmap_items::p
     reset();
 }
 
-void game::reset() {
+void jump_game::reset() {
     _edges.clear();
     _nodes.clear();
 
@@ -30,7 +30,7 @@ void game::reset() {
     _base_joint_angle = _joints[0].ideal_angle();
 }
 
-void game::update() {
+void jump_game::update() {
     _painter.clear();
     if(bn::keypad::start_pressed()) reset();
 
@@ -66,8 +66,8 @@ void game::update() {
     _painter.flip_page_later();
 }
 
-void game::draw_line(const bn::fixed_point& start, const bn::fixed_point& end, int color_idx) {
-    // Convert from game coordinates (origin at center)
+void jump_game::draw_line(const bn::fixed_point& start, const bn::fixed_point& end, int color_idx) {
+    // Convert from jump_game coordinates (origin at center)
     // to screen coordinates (origin at top-left)
     _painter.line(start.x().floor_integer() + MAX_X, 
                   start.y().floor_integer() + MAX_Y,
@@ -76,7 +76,7 @@ void game::draw_line(const bn::fixed_point& start, const bn::fixed_point& end, i
                    color_idx);
 }
 
-node& game::emplace_node(bn::fixed_point position, bool connect) {
+node& jump_game::emplace_node(bn::fixed_point position, bool connect) {
     auto& new_node = _nodes.emplace_back(position);
 
     bn::fixed squared_connect_thresh = 2000;

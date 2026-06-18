@@ -4,9 +4,9 @@
 #include <bn_keypad.h>
 
 #include "bn_sprite_items_cursor.h"
-#include "game.h"
+#include "jump_game.h"
 
-cursor::cursor(game& g, bn::fixed_point start, bn::fixed speed) 
+cursor::cursor(jump_game& g, bn::fixed_point start, bn::fixed speed) 
 : _g(g),
  _spr(bn::sprite_items::cursor.create_sprite(start)),
   _speed(speed)  {
