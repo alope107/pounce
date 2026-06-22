@@ -2,17 +2,17 @@
 
 #include "node.h"
 
-class game;
+class jump_game;
 
 class edge {
 public:
-    edge(game& g, node& start, node& end, bn::fixed k);
+    edge(jump_game& g, node& start, node& end, bn::fixed k);
     void exert();
     void draw();
     bn::fixed scale();
     void set_scale(bn::fixed scale);
 private:
-    game& _g;
+    jump_game& _g;
     node& _start;
     node& _end;
     bn::fixed _k;
