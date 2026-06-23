@@ -1,9 +1,9 @@
 #include "joint.h"
 
 #include "arrow_math.h"
-#include "game.h"
+#include "jump_game.h"
 
-joint::joint(game& g,node& a, node& hinge, node& b, bn::fixed k, bool draw_debug) :
+joint::joint(jump_game& g,node& a, node& hinge, node& b, bn::fixed k, bool draw_debug) :
  _g(g),
  _a(a),
  _hinge(hinge), 

@@ -4,11 +4,11 @@
 #include "arrow_math.h"
 // TODO: Probably lots of math optimizations!
 
-#include "game.h"
+#include "jump_game.h"
 
 
 
-edge::edge(game& g, node& start, node& end, bn::fixed k) :
+edge::edge(jump_game& g, node& start, node& end, bn::fixed k) :
     _g(g),
     _start(start),
     _end(end),

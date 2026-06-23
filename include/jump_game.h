@@ -12,9 +12,9 @@ static constexpr int MAX_EDGES = 100;
 static constexpr int MAX_JOINTS = 50;
 
 
-class game {
+class jump_game {
 public:
-    game();
+    jump_game();
     void update();
     void reset();
     void draw_line(const bn::fixed_point& start, const bn::fixed_point& end, int color_idx=7);
