@@ -34,5 +34,5 @@ arrow degrees_to_arrow(bn::fixed degrees, bn::fixed magnitude) {
 }
 
 bn::fixed arrow_to_degrees(arrow u) {
-    return bn::safe_degrees_angle(bn::degrees_atan2(u.x().shift_integer(), u.y().shift_integer()));
+    return bn::safe_degrees_angle(bn::degrees_atan2(u.y().shift_integer(), u.x().shift_integer()));
 }
