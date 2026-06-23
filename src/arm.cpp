@@ -26,9 +26,7 @@ void arm::update() {
     ang += 1.5;
     _paw = _shoulder + degrees_to_arrow(ang, ARM_LENGTH);
     arrow half_arm = _paw - _shoulder;
-    //BN_LOG(half_arm.x(), ",", half_arm.y());
     _spr.set_position(half_arm);
     ang = arrow_to_degrees(half_arm);
-    //BN_LOG(ang);
     _spr.set_rotation_angle(bn::safe_degrees_angle(-ang));
 }
