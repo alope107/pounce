@@ -14,12 +14,18 @@ static constexpr int ARM_LENGTH = 64;
 
 class arm {
     public:
-        arm(bn::rect shoulder_bounds, mins paw_bounds);
+        arm(bn::rect shoulder_bounds, mins paw_bounds, bn::fixed speed=1);
         void update();
     private:
         bn::sprite_ptr _spr;
         bn::rect _shoulder_bounds;
         mins _paw_bounds;
         bn::fixed_point _shoulder;
-        bn::fixed_point _paw;
+        bn::fixed _speed;
+        bn::fixed _angle;
+        // bn::fixed_point _paw;
+
+        void _move();
+        void _update_sprite();
+
 };
