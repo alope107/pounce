@@ -1,4 +1,5 @@
 #include "arrow_math.h"
+#include <bn_math.h>
 
 // angle between 2 arrows
 bn::fixed angle(const arrow& u, const arrow& v) {
@@ -25,4 +26,13 @@ bn::fixed angle(const bn::fixed_point& a, const bn::fixed_point& hinge, const bn
     arrow v = b - hinge;
 
     return angle(u, v);
+}
+
+arrow degrees_to_arrow(bn::fixed degrees, bn::fixed magnitude) {
+    auto trig = bn::degrees_lut_sin_and_cos(bn::safe_degrees_angle(degrees));
+    return {magnitude * trig.second, magnitude * trig.first};
+}
+
+bn::fixed arrow_to_degrees(arrow u) {
+    return bn::safe_degrees_angle(bn::degrees_atan2(u.x().shift_integer(), u.y().shift_integer()));
 }

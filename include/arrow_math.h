@@ -47,3 +47,9 @@ bn::fixed angle(const arrow& u, const arrow& v);
 
 //angle between 3 points
 bn::fixed angle(const bn::fixed_point& a, const bn::fixed_point& hinge, const bn::fixed_point& b);
+
+// Creates an arrow that forms angle degress with X axis and has a length of magnitude
+arrow degrees_to_arrow(bn::fixed angle, bn::fixed magnitude);
+
+// Calculates the angle of the arrow with the X axis: [-180, 180]
+bn::fixed arrow_to_degrees(arrow u);
