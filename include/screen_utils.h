@@ -1,4 +1,5 @@
 #pragma once
+#include <bn_point.h>
 #include <bn_fixed_point.h>
 #include <bn_math.h>
 #include <bn_rect.h>
@@ -31,4 +32,8 @@ inline bn::fixed_point clamp_to_screen (const bn::fixed_point& point) {
 inline int tribool (bool neg, bool pos) {
     if((neg && pos) || (!neg && !pos)) return 0;
     return neg ? -1 : 1;
+}
+
+inline bn::point round_fixed_point(const bn::fixed_point& point) {
+    return {point.x().shift_integer(), point.y().shift_integer()};
 }

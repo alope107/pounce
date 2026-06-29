@@ -1,8 +1,12 @@
 // Going with a simpler approach for MVP
 // Will return to more complex after
 
+#include "arrow_math.h"
 #include "simple_arm.h"
 #include "screen_utils.h"
+#include "fish.h"
+#include "fish_game.h"
+
 
 #include <bn_keypad.h>
 
@@ -11,7 +15,12 @@
 static constexpr int BASE_ANGLE = 275;
 static constexpr int MAX_ANGLE = 355;
 
-simple_arm::simple_arm(bn::rect bounds, bn::fixed move_speed, bn::fixed swipe_speed) : 
+static constexpr int HITBOX_WIDTH = 8;
+
+static constexpr int PAW_LOC = (SIMPLE_ARM_LENGTH >> 1) - (HITBOX_WIDTH >> 1);
+
+simple_arm::simple_arm(fish_game& g, bn::rect bounds, bn::fixed move_speed, bn::fixed swipe_speed) : 
+    _g(g),
     _spr(bn::sprite_items::arm.create_sprite()),
     _bounds(bounds),
     _move_speed(move_speed),
@@ -41,6 +50,17 @@ void simple_arm::update() {
     }
 }
 
+void simple_arm::set_state(arm_state state) {
+    _state = state;
+}
+
+bn::optional<bn::rect> simple_arm::hitbox() {
+    if(_state != arm_state::SWIPING) return {};
+    // TODO determine whether negating the rotation is appropriate or if the degrees_to_arrow is backward
+    bn::fixed_point hit_center = _spr.position() + degrees_to_arrow(-_spr.rotation_angle(), PAW_LOC);
+    return bn::rect(round_fixed_point(hit_center), {HITBOX_WIDTH, HITBOX_WIDTH});
+}
+
 void simple_arm::_move() {
     bn::fixed_point target = _spr.position();
     // TODO - extract to utility? 
@@ -57,7 +77,17 @@ void simple_arm::_swipe() {
     bn::fixed current = _spr.rotation_angle();
     // TODO: handle overshoot where angle wraps
     if(current < MAX_ANGLE) {
-        _spr.set_rotation_angle(current + _swipe_speed);
+        current += _swipe_speed;
+        _spr.set_rotation_angle(current);
+
+        // bn::fixed_point hit_center = _spr.position() + degrees_to_arrow(current, PAW_LOC);
+        // bn::rect hitbox = bn::rect(round_fixed_point(hit_center), {HITBOX_WIDTH, HITBOX_WIDTH});
+
+        // // maybe all this logic should live in the fish game?
+        // auto hit_fish = _g.hit_fish(hitbox);
+        // if(hit_fish.has_value()) {
+        //     _state = arm_state::RETURNING;
+        // }
     } else {
         _state = arm_state::RETURNING;
     }

@@ -13,6 +13,7 @@ class fish {
     public:
         fish(bn::rect bounds, arrow start_vel={.5, .5});
         void update();
+        bn::rect hitbox();
     private:
         bn::sprite_ptr _spr;
         // Use cached animation? Or seomthing else?
