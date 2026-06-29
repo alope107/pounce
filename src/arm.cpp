@@ -22,7 +22,8 @@ arm::arm(bn::rect shoulder_bounds, mins paw_bounds, bn::fixed speed) :
     _spr(bn::sprite_items::arm.create_sprite()),
     _shoulder_bounds(shoulder_bounds),
     _paw_bounds(paw_bounds),
-    _shoulder(_shoulder_bounds.position()),
+    _paw({_paw_bounds.x() + 15, _paw_bounds.y() + 15}),
+    //_shoulder(_shoulder_bounds.position()),
     _speed(speed),
     _angle(315) {
     //_paw(_shoulder + degrees_to_arrow(315, ARM_LENGTH)) {
@@ -34,7 +35,7 @@ arm::arm(bn::rect shoulder_bounds, mins paw_bounds, bn::fixed speed) :
     // bn::fixed ang = arrow_to_degrees(half_arm);
     // BN_LOG(ang);
     // _spr.set_rotation_angle(bn::safe_degrees_angle(-ang));
-        _update_sprite();
+     _update_sprite();
 
 }
 
@@ -52,47 +53,53 @@ void arm::_move() {
     // moved = true;
     // TODO END REMOVE
 
+    bn::fixed_point target = _paw;
+
+
     // TODO: make diagonals normalized?
     if(bn::keypad::up_held()) {
-        _shoulder.set_y(_shoulder.y() - _speed);
-        if(_shoulder.y() < _shoulder_bounds.top()) {
-            _shoulder.set_y(_shoulder_bounds.top());
+        target.set_y(target.y() - _speed);
+        if(target.y() < _paw_bounds.y()) {
+            target.set_y(_paw_bounds.y());
 
-            //TODO handle angle change
-            _angle -= _speed;
-        }
-        moved = true;
-    }
-    if(bn::keypad::down_held()) {
-        _shoulder.set_y(_shoulder.y() + _speed);
-        if(_shoulder.y() > _shoulder_bounds.bottom()) {
-            _shoulder.set_y(_shoulder_bounds.bottom());
-
-            //TODO handle angle change
+            //TODO handle shoulder angle change?
+            // _angle -= _speed;
         }
         moved = true;
     }
     if(bn::keypad::left_held()) {
-        _shoulder.set_x(_shoulder.x() - _speed);
-        if(_shoulder.x() < _shoulder_bounds.left()) {
-            _shoulder.set_x(_shoulder_bounds.left());
+        target.set_x(target.x() - _speed);
+        if(target.x() < _paw_bounds.x()) {
+            target.set_x(_paw_bounds.x());
 
-            //TODO handle angle change
+            //TODO handle shoulder angle change?
             // TODO normalize angle change speed
             // TODO keep paw in bounds
-            _angle += _speed;
+            // _angle += _speed;
         }
         moved = true;
     }
-    if(bn::keypad::right_held()) {
-        _shoulder.set_x(_shoulder.x() + _speed);
-        if(_shoulder.x() > _shoulder_bounds.right()) {
-            _shoulder.set_x(_shoulder_bounds.right());
 
-            //TODO handle angle change
-        }
-        moved = true;
-    }
+    _paw = target;
+
+    // if(bn::keypad::down_held()) {
+    //     target.set_y(target.y() + _speed);
+    //     if(target.y() > _shoulder_bounds.bottom()) {
+    //         target.set_y(_shoulder_bounds.bottom());
+
+    //         //TODO handle angle change
+    //     }
+    //     moved = true;
+    // }
+    // if(bn::keypad::right_held()) {
+    //     target.set_x(target.x() + _speed);
+    //     if(target.x() > _shoulder_bounds.right()) {
+    //         target.set_x(_shoulder_bounds.right());
+
+    //         //TODO handle angle change
+    //     }
+    //     moved = true;
+    // }
 
     if(moved) {
         _update_sprite();
@@ -100,10 +107,10 @@ void arm::_move() {
 }
 
 void arm::_update_sprite() {
-    _spr.set_rotation_angle(bn::safe_degrees_angle(-_angle));
+    _spr.set_rotation_angle(_angle);
 
     // center sprite halfway between arm and paw
     arrow half_arm = degrees_to_arrow(_angle, ARM_LENGTH >> 1);
-    _spr.set_position(_shoulder + half_arm);
+    _spr.set_position(_paw - half_arm);
 }
 
