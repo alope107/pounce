@@ -7,7 +7,8 @@
 
 fish_game::fish_game(bn::random rng) : 
     _rng(rng),
-    _arm(bn::rect(-30, -30, 30, 30), {-30, -30})
+    // _arm(bn::rect(-30, -30, 30, 30), {-30, -30}),
+    _simple_arm(bn::rect(-30, -30, 30, 30))
      {
         for(int i = 0; i < 3; i++) {
             _fishes.push_back(fish(
@@ -18,7 +19,7 @@ fish_game::fish_game(bn::random rng) :
 }
 
 void fish_game::update() {
-    _arm.update();
+    _simple_arm.update();
     for(fish& fish : _fishes) {
         fish.update();
     }
