@@ -5,10 +5,11 @@
 #include "fish.h"
 #include "arm.h"
 #include "simple_arm.h"
+#include "game.h"
 
 static constexpr int MAX_FISH = 10;
 
-class fish_game {
+class fish_game : public game {
     public:
         fish_game(bn::random rng);
         void update();
