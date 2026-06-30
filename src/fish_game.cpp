@@ -23,16 +23,7 @@ fish_game::fish_game(bn::random rng) :
         }
 }
 
-// bn::optional<fish&> fish_game::hit_fish(bn::rect hitbox) {
-//     BN_LOG("Trying to hit");
-//     BN_LOG("Paw hitbox", hitbox.left(), hitbox.top(), hitbox.right(), hitbox.bottom());
-//     for(fish& f : _fishes) {
-//         if (f.hit(hitbox)) {
-//             return bn::optional<fish&>(f);
-//         }
-//     }
-//     return bn::optional<fish&>();
-// }
+
 
 void fish_game::update() {
     _simple_arm.update();
@@ -42,13 +33,15 @@ void fish_game::update() {
     } else {
         _debug_dot.set_position(-100, 100);
     }
-    for(fish& fish : _fishes) {
-        fish.update();
-        if(paw_hitbox.has_value()) {
-            if(fish.hitbox().intersects(*paw_hitbox)) {
+    for(auto it = _fishes.begin(); it != _fishes.end(); ) {
+        fish& f = *it;
+        f.update();
+        if(paw_hitbox.has_value() && f.hitbox().intersects(*paw_hitbox)) {
+                it = _fishes.erase(it);// Maybe inefficient to do with vector? Probably small enough it doesn't matter
                 BN_LOG("hit!");
-                _simple_arm.set_state(arm_state::RETURNING);
-            }
+                //_simple_arm.set_state(arm_state::RETURNING);
+        } else {
+            it++;
         }
     }
 }
