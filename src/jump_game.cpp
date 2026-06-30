@@ -24,10 +24,10 @@ void jump_game::reset() {
 
     _edges.emplace_back(*this, _nodes[0], _nodes[1], .5);
     _edges.emplace_back(*this, _nodes[1], _nodes[2], .5);
-    //_edges.emplace_back(*this, _nodes[2], _nodes[0], .5);
+    _edges.emplace_back(*this, _nodes[2], _nodes[0], .5);
 
-    _joints.emplace_back(*this, _nodes[0], _nodes[1], _nodes[2], 30, true);
-    _base_joint_angle = _joints[0].ideal_angle();
+    // _joints.emplace_back(*this, _nodes[0], _nodes[1], _nodes[2], 30, true);
+    //_base_joint_angle = _joints[0].ideal_angle();
 }
 
 void jump_game::update() {
@@ -46,7 +46,8 @@ void jump_game::update() {
         _scale = 1;
     }
 
-    _joints[0].set_ideal_angle(_base_joint_angle * _scale);
+
+    //_joints[0].set_ideal_angle(_base_joint_angle * _scale);
 
     _cursor.update();
     for(joint& joint : _joints) {
