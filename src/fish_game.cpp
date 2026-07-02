@@ -9,6 +9,8 @@
 
 #include "bn_sprite_items_debug_dot.h"
 
+static constexpr bool DEBUG_DOT = false;
+
 fish_game::fish_game(bn::random rng) :
     _debug_dot(bn::sprite_items::debug_dot.create_sprite(-100, -100)),
     _rng(rng),
@@ -28,7 +30,7 @@ fish_game::fish_game(bn::random rng) :
 void fish_game::update() {
     _simple_arm.update();
     auto paw_hitbox = _simple_arm.hitbox();
-    if(paw_hitbox.has_value()) {
+    if(paw_hitbox.has_value() && DEBUG_DOT) {
         _debug_dot.set_position((*paw_hitbox).center());
     } else {
         _debug_dot.set_position(-100, 100);
