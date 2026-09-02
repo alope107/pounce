@@ -17,7 +17,7 @@ fish_game::fish_game(bn::random rng) :
     // _arm(bn::rect(-30, -30, 30, 30), {-30, -30}),
     _simple_arm(*this, bn::rect(-30, -30, 30, 30))
      {
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < 1; i++) {
             _fishes.push_back(fish(
                 bn::rect(0, 0, 100, 80),
                 {_rng.get_fixed(-1, 1), _rng.get_fixed(-1, 1)}
@@ -41,9 +41,13 @@ void fish_game::update() {
         if(paw_hitbox.has_value() && f.hitbox().intersects(*paw_hitbox)) {
                 it = _fishes.erase(it);// Maybe inefficient to do with vector? Probably small enough it doesn't matter
                 BN_LOG("hit!");
+                _grabbeds.push_back(grabbed(_simple_arm, {-100, -100}));
                 //_simple_arm.set_state(arm_state::RETURNING);
         } else {
             it++;
         }
+    }
+    for (auto g : _grabbeds) {
+        g.update();
     }
 }

@@ -30,8 +30,7 @@ simple_arm::simple_arm(fish_game& g, bn::rect bounds, bn::fixed move_speed, bn::
 }
 
 void simple_arm::update() {
-    switch (_state)
-    {
+    switch (_state) {
     case arm_state::MOVING:
         if(bn::keypad::a_pressed()) {
             _state = arm_state::SWIPING;
@@ -79,15 +78,6 @@ void simple_arm::_swipe() {
     if(current < MAX_ANGLE) {
         current += _swipe_speed;
         _spr.set_rotation_angle(current);
-
-        // bn::fixed_point hit_center = _spr.position() + degrees_to_arrow(current, PAW_LOC);
-        // bn::rect hitbox = bn::rect(round_fixed_point(hit_center), {HITBOX_WIDTH, HITBOX_WIDTH});
-
-        // // maybe all this logic should live in the fish game?
-        // auto hit_fish = _g.hit_fish(hitbox);
-        // if(hit_fish.has_value()) {
-        //     _state = arm_state::RETURNING;
-        // }
     } else {
         _state = arm_state::RETURNING;
     }
