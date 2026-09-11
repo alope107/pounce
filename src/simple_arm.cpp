@@ -12,7 +12,7 @@
 #include "bn_sprite_items_fritozoomarm.h"
 
 static constexpr int BASE_ANGLE = 275;
-static constexpr int MAX_ANGLE = 355;
+static constexpr int MIN_ANGLE = 195;//355;
 
 static constexpr int HITBOX_WIDTH = 8;
 
@@ -87,9 +87,9 @@ void simple_arm::_swipe()
 {
     bn::fixed current = _paw_spr.rotation_angle();
     // TODO: handle overshoot where angle wraps
-    if (current < MAX_ANGLE)
+    if (current > MIN_ANGLE)
     {
-        current += _swipe_speed;
+        current -= _swipe_speed;
         _paw_spr.set_rotation_angle(current);
     }
     else
@@ -101,10 +101,10 @@ void simple_arm::_swipe()
 void simple_arm::_return()
 {
     bn::fixed current = _paw_spr.rotation_angle();
-    if (current > BASE_ANGLE)
+    if (current < BASE_ANGLE)
     {
         // TODO: handle overshoot where angle wraps
-        _paw_spr.set_rotation_angle(current - (_swipe_speed / 2));
+        _paw_spr.set_rotation_angle(current + (_swipe_speed / 2));
     }
     else
     {
