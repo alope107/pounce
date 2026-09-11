@@ -18,7 +18,7 @@ enum class arm_state
 class simple_arm
 {
 public:
-    simple_arm(fish_game &g, bn::rect bounds, bn::fixed move_speed = 1, bn::fixed swipe_speed = 10);
+    simple_arm(fish_game &g, bn::rect bounds, bn::fixed move_speed = 1, bn::fixed swipe_speed = 15);
     void update();
     void set_state(arm_state state);
     bn::optional<bn::rect> hitbox(); // Gives the active hitbox if it exists. Hitbox is only active when swiping

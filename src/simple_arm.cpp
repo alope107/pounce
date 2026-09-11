@@ -27,7 +27,7 @@ simple_arm::simple_arm(fish_game &g, bn::rect bounds, bn::fixed move_speed, bn::
                                                                                                      _state(arm_state::MOVING)
 {
     _paw_spr.set_rotation_angle(BASE_ANGLE);
-    _elbow_spr.set_rotation_angle(270);
+    _elbow_spr.set_rotation_angle(BASE_ANGLE);
 }
 
 void simple_arm::update()
@@ -53,6 +53,8 @@ void simple_arm::update()
         _return();
         break;
     }
+    bn::fixed_point joint = _paw_spr.position() - degrees_to_arrow(-_paw_spr.rotation_angle(), PAW_LOC);
+    _elbow_spr.set_position(joint + bn::fixed_point{0, -20});
 }
 
 void simple_arm::set_state(arm_state state)
@@ -80,7 +82,6 @@ void simple_arm::_move()
                                   tribool(bn::keypad::up_held(), bn::keypad::down_held()));
 
     _paw_spr.set_position(clamp_point(_bounds, target));
-    _elbow_spr.set_position(_paw_spr.position() + bn::fixed_point{0, -30});
 }
 
 void simple_arm::_swipe()
