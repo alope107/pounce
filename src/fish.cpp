@@ -1,11 +1,18 @@
 #include "fish.h"
 
+#include <bn_rect.h>
+#include <bn_log.h>
+
+#include "screen_utils.h"
+
 #include "bn_sprite_items_snack.h"
 
 #include "bn_sprite_tiles_item.h"
 
 namespace {
     static const bn::sprite_tiles_item tiles = bn::sprite_items::snack.tiles_item();
+    static constexpr int FISH_WIDTH = 16;
+    static constexpr int FISH_HEIGHT = 16;
 }
 
 fish::fish(bn::rect bounds, arrow start_vel) :
@@ -40,3 +47,8 @@ void fish::update() {
     _anim.update();
 }
 
+bn::rect fish::hitbox() {
+    // TODO: if there are multiple collision checks per frame we will want to cache the hitbox
+    return bn::rect(round_fixed_point(_spr.position()),
+                              {FISH_WIDTH, FISH_HEIGHT});
+}

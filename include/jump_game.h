@@ -6,13 +6,14 @@
 #include "cursor.h"
 #include "node.h"
 #include "joint.h"
+#include "game.h"
 
 static constexpr int MAX_NODES = 50;
 static constexpr int MAX_EDGES = 100;
 static constexpr int MAX_JOINTS = 50;
 
 
-class jump_game {
+class jump_game : public game {
 public:
     jump_game();
     void update();

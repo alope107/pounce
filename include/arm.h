@@ -20,10 +20,11 @@ class arm {
         bn::sprite_ptr _spr;
         bn::rect _shoulder_bounds;
         mins _paw_bounds;
-        bn::fixed_point _shoulder;
+        //bn::fixed_point _shoulder;
+        bn::fixed_point _paw;
         bn::fixed _speed;
         bn::fixed _angle;
-        // bn::fixed_point _paw;
+        
 
         void _move();
         void _update_sprite();
