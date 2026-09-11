@@ -18,17 +18,17 @@
 #include "title_screen.h"
 #include "bn_unique_ptr.h"
 
-
-int main() {
+int main()
+{
     bn::core::init();
 
     auto rng = bn::random();
-    bn::unique_ptr<game> g = bn::make_unique<title_screen>();//bn::make_unique<title_screen>();
+    bn::unique_ptr<game> g = bn::make_unique<title_screen>(); // bn::make_unique<title_screen>();
 
     GAME_TYPE current_game_type = GAME_TYPE::TITLE_SCREEN;
 
-    
-    while(true) {
+    while (true)
+    {
         // if(bn::keypad::select_pressed()) {
         //     if(isFish) {
         //         g = bn::make_unique<jump_game>();
@@ -38,25 +38,25 @@ int main() {
         //     isFish = !isFish;
         // }
         GAME_TYPE new_game_type = g->update();
-        if(new_game_type != current_game_type) {
-            //g.release(); // Release old game first so memory is freed before loading new one
+        if (new_game_type != current_game_type)
+        {
+            g.reset(); // Release old game first so memory is freed before loading new one
             switch (new_game_type)
             {
-                case GAME_TYPE::TITLE_SCREEN:
-                    g = bn::make_unique<title_screen>();
-                    break;
-                case GAME_TYPE::FISH_GAME:
-                    g = bn::make_unique<fish_game>(rng);
-                    break;
-                case GAME_TYPE::JUMP_GAME: // Currently unused
-                    g = bn::make_unique<jump_game>();
-                    break;
-                default:
-                    BN_ASSERT(false, "Got unknown game type");
+            case GAME_TYPE::TITLE_SCREEN:
+                g = bn::make_unique<title_screen>();
+                break;
+            case GAME_TYPE::FISH_GAME:
+                g = bn::make_unique<fish_game>(rng);
+                break;
+            case GAME_TYPE::JUMP_GAME: // Currently unused
+                g = bn::make_unique<jump_game>();
+                break;
+            default:
+                BN_ASSERT(false, "Got unknown game type");
             }
             current_game_type = new_game_type;
         }
         bn::core::update();
     }
 }
-

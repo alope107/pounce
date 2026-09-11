@@ -10,7 +10,7 @@
 
 #include <bn_keypad.h>
 
-#include "bn_sprite_items_arm.h"
+#include "bn_sprite_items_fritozoomarm.h"
 
 static constexpr int BASE_ANGLE = 275;
 static constexpr int MAX_ANGLE = 355;
@@ -21,7 +21,7 @@ static constexpr int PAW_LOC = (SIMPLE_ARM_LENGTH >> 1) - (HITBOX_WIDTH >> 1);
 
 simple_arm::simple_arm(fish_game& g, bn::rect bounds, bn::fixed move_speed, bn::fixed swipe_speed) : 
     _g(g),
-    _spr(bn::sprite_items::arm.create_sprite()),
+    _spr(bn::sprite_items::fritozoomarm.create_sprite()),
     _bounds(bounds),
     _move_speed(move_speed),
     _swipe_speed(swipe_speed),
