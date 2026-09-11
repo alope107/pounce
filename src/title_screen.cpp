@@ -1,0 +1,30 @@
+#include "title_screen.h"
+
+#include "bn_sprite_items_fritobuttshake.h"
+#include "bn_sprite_items_lilypad1.h"
+#include "bn_sprite_items_lilypad2.h"
+#include "bn_regular_bg_items_background.h"
+
+static constexpr bn::fixed_point FRITO_TITLE_POS = {0, -25};
+static constexpr int FRITO_BUTT_DELAY = 18;
+
+
+title_screen::title_screen() :
+    _bg(bn::regular_bg_items::background.create_bg()),
+    _frito_spr(bn::sprite_items::fritobuttshake.create_sprite(FRITO_TITLE_POS)),
+    _frito_anim(bn::create_sprite_animate_action_forever(
+                 _frito_spr,
+                 FRITO_BUTT_DELAY, 
+                bn::sprite_items::fritobuttshake.tiles_item(),
+                0,1,2,3,4,5)),
+    _lillies() {
+        _lillies.push_back(lily({30, 12}, {0, 0}, .7, 20));
+        _lillies.push_back(lily({-25, 26}, {0, 0}, 1));
+}
+
+void title_screen::update() {
+    _frito_anim.update();
+    for(auto &lil : _lillies) {
+        lil.update();
+    }
+}
