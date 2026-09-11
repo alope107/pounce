@@ -17,7 +17,7 @@ fish_game::fish_game(bn::random rng) :
     _debug_dot(bn::sprite_items::debug_dot.create_sprite(-100, -100)),
     _rng(rng),
     // _arm(bn::rect(-30, -30, 30, 30), {-30, -30}),
-    _simple_arm(*this, bn::rect(-30, -30, 30, 30))
+    _simple_arm(*this, bn::rect(70, -30, 40, 30))
      {
         for(int i = 0; i < 1; i++) {
             _fishes.push_back(fish(
