@@ -1,5 +1,6 @@
 #pragma once
 
+#include <bn_regular_bg_ptr.h>
 #include <bn_vector.h>
 #include <bn_random.h>
 #include "fish.h"
@@ -15,6 +16,7 @@ class fish_game : public game {
         fish_game(bn::random rng);
         GAME_TYPE update();
     private:
+        bn::regular_bg_ptr _bg;
         bn::sprite_ptr _debug_dot;
         bn::random _rng;
         simple_arm _simple_arm;

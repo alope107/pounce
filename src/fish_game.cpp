@@ -8,10 +8,12 @@
 #include "arrow_math.h"
 
 #include "bn_sprite_items_debug_dot.h"
+#include "bn_regular_bg_items_bottomofpond.h"
 
 static constexpr bool DEBUG_DOT = false;
 
 fish_game::fish_game(bn::random rng) :
+    _bg(bn::regular_bg_items::bottomofpond.create_bg()),
     _debug_dot(bn::sprite_items::debug_dot.create_sprite(-100, -100)),
     _rng(rng),
     // _arm(bn::rect(-30, -30, 30, 30), {-30, -30}),
