@@ -13,7 +13,7 @@ static constexpr int TITLE_LILY_COUNT = 4;
 class title_screen : public game {
     public:
         title_screen();
-        void update();
+        GAME_TYPE update();
     private:
         bn::regular_bg_ptr _bg;
         // Maybe make Frito + animation her own class?

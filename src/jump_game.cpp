@@ -6,6 +6,7 @@
 
 #include <bn_keypad.h>
 
+// SOmething funky going on - maybe not releasing bg properly?
 jump_game::jump_game() : _bg(bn::palette_bitmap_bg_ptr::create(bn::palette_bitmap_items::pal.palette_item())),
                _painter(_bg),
                 _cursor(*this),
@@ -30,7 +31,11 @@ void jump_game::reset() {
     //_base_joint_angle = _joints[0].ideal_angle();
 }
 
-void jump_game::update() {
+GAME_TYPE jump_game::update() {
+    if(bn::keypad::select_pressed()) {
+        return GAME_TYPE::TITLE_SCREEN;
+    }
+
     _painter.clear();
     if(bn::keypad::start_pressed()) reset();
 
@@ -65,6 +70,8 @@ void jump_game::update() {
         edge.draw();
     }
     _painter.flip_page_later();
+
+    return GAME_TYPE::JUMP_GAME;
 }
 
 void jump_game::draw_line(const bn::fixed_point& start, const bn::fixed_point& end, int color_idx) {

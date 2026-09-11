@@ -1,10 +1,10 @@
 #include "fish_game.h"
 
-#include "fish.h"
-
-#include <bn_rect.h>
+#include <bn_keypad.h>
 #include <bn_log.h>
+#include <bn_rect.h>
 
+#include "fish.h"
 #include "arrow_math.h"
 
 #include "bn_sprite_items_debug_dot.h"
@@ -27,7 +27,10 @@ fish_game::fish_game(bn::random rng) :
 
 
 
-void fish_game::update() {
+GAME_TYPE fish_game::update() {
+    if(bn::keypad::select_pressed()) {
+        return GAME_TYPE::TITLE_SCREEN;
+    }
     _simple_arm.update();
     auto paw_hitbox = _simple_arm.hitbox();
     if(paw_hitbox.has_value() && DEBUG_DOT) {
@@ -50,4 +53,5 @@ void fish_game::update() {
     for (auto g : _grabbeds) {
         g.update();
     }
+    return GAME_TYPE::FISH_GAME;
 }

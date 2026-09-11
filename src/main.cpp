@@ -1,3 +1,4 @@
+#include <bn_assert.h>
 #include <bn_core.h>
 #include <bn_keypad.h>
 #include <bn_regular_bg_ptr.h>
@@ -21,10 +22,10 @@
 int main() {
     bn::core::init();
 
-    // auto rng = bn::random();
-    // jump_game g = jump_game();
-    //bool isFish = true; //todo: swap this to an enum of scenes
-    bn::unique_ptr<game> g = bn::make_unique<title_screen>();
+    auto rng = bn::random();
+    bn::unique_ptr<game> g = bn::make_unique<title_screen>();//bn::make_unique<title_screen>();
+
+    GAME_TYPE current_game_type = GAME_TYPE::TITLE_SCREEN;
 
     
     while(true) {
@@ -36,7 +37,25 @@ int main() {
         //     }
         //     isFish = !isFish;
         // }
-        g->update();
+        GAME_TYPE new_game_type = g->update();
+        if(new_game_type != current_game_type) {
+            //g.release(); // Release old game first so memory is freed before loading new one
+            switch (new_game_type)
+            {
+                case GAME_TYPE::TITLE_SCREEN:
+                    g = bn::make_unique<title_screen>();
+                    break;
+                case GAME_TYPE::FISH_GAME:
+                    g = bn::make_unique<fish_game>(rng);
+                    break;
+                case GAME_TYPE::JUMP_GAME: // Currently unused
+                    g = bn::make_unique<jump_game>();
+                    break;
+                default:
+                    BN_ASSERT(false, "Got unknown game type");
+            }
+            current_game_type = new_game_type;
+        }
         bn::core::update();
     }
 }

@@ -16,7 +16,7 @@ static constexpr int MAX_JOINTS = 50;
 class jump_game : public game {
 public:
     jump_game();
-    void update();
+    GAME_TYPE update();
     void reset();
     void draw_line(const bn::fixed_point& start, const bn::fixed_point& end, int color_idx=7);
     node& emplace_node(bn::fixed_point position, bool connect); 

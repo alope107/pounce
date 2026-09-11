@@ -13,7 +13,7 @@ static constexpr int MAX_FISH = 10;
 class fish_game : public game {
     public:
         fish_game(bn::random rng);
-        void update();
+        GAME_TYPE update();
     private:
         bn::sprite_ptr _debug_dot;
         bn::random _rng;

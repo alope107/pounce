@@ -1,5 +1,7 @@
 #include "title_screen.h"
 
+#include <bn_keypad.h>
+
 #include "bn_sprite_items_fritobuttshake.h"
 #include "bn_sprite_items_lilypad1.h"
 #include "bn_sprite_items_lilypad2.h"
@@ -22,9 +24,18 @@ title_screen::title_screen() :
         _lillies.push_back(lily({-25, 26}, {0, 0}, 1));
 }
 
-void title_screen::update() {
+GAME_TYPE title_screen::update() {
+    if(bn::keypad::a_pressed() || 
+       bn::keypad::b_pressed() ||
+       bn::keypad::start_pressed()) {
+        // Todo: transition animation
+        return GAME_TYPE::FISH_GAME;
+    }
+
     _frito_anim.update();
     for(auto &lil : _lillies) {
         lil.update();
     }
+
+    return GAME_TYPE::TITLE_SCREEN;
 }
