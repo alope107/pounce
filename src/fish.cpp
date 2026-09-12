@@ -44,6 +44,7 @@ void fish::update() {
     }
 
     _spr.set_position(new_pos);
+    _spr.set_rotation_angle_safe(arrow_to_degrees({_vel.x(), -_vel.y()}));
     _anim.update();
 }
 
