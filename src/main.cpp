@@ -3,6 +3,7 @@
 #include <bn_keypad.h>
 #include <bn_regular_bg_ptr.h>
 #include <bn_sprite_animate_actions.h>
+#include <bn_sprite_text_generator.h>
 
 #include "jump_game.h"
 #include "fish_game.h"
@@ -17,30 +18,32 @@
 #include "game.h"
 #include "title_screen.h"
 #include "bn_unique_ptr.h"
+#include "fuzzyfont.h"
 
 int main()
 {
     bn::core::init();
 
     auto rng = bn::random();
-    bn::unique_ptr<game> g = bn::make_unique<title_screen>(); // bn::make_unique<title_screen>();
+    bn::unique_ptr<game> g = bn::make_unique<title_screen>();
 
     GAME_TYPE current_game_type = GAME_TYPE::TITLE_SCREEN;
 
+    bn::sprite_font font = fuzzyfont;
+    bn::sprite_text_generator text_generator(font);
+    text_generator.set_alignment(bn::sprite_text_generator::alignment_type::CENTER);
+
+    bn::vector<bn::sprite_ptr, 20> text_sprs;
+    text_generator.generate({0, 50}, "PRESS A", text_sprs);
+    text_generator.generate({0, 68}, "TO START", text_sprs);
+
+
     while (true)
     {
-        // if(bn::keypad::select_pressed()) {
-        //     if(isFish) {
-        //         g = bn::make_unique<jump_game>();
-        //     } else {
-        //         g = bn::make_unique<fish_game>(rng);
-        //     }
-        //     isFish = !isFish;
-        // }
         GAME_TYPE new_game_type = g->update();
         if (new_game_type != current_game_type)
         {
-            g.reset(); // Release old game first so memory is freed before loading new one
+            g.reset(); // Clear old game first so memory is freed before loading new one
             switch (new_game_type)
             {
             case GAME_TYPE::TITLE_SCREEN:
