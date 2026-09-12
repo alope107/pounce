@@ -15,8 +15,8 @@ namespace {
     static constexpr int FISH_HEIGHT = 16;
 }
 
-fish::fish(bn::rect bounds, arrow start_vel) :
-    _spr(bn::sprite_items::snack.create_sprite()),
+fish::fish(bn::fixed_point start_position, bn::rect bounds, arrow start_vel) :
+    _spr(bn::sprite_items::snack.create_sprite(start_position)),
     // TODO: std::apply or macro to expand animation frames?
     _anim(bn::create_sprite_animate_action_forever(_spr, 9, bn::sprite_items::snack.tiles_item(), 0, 1, 2, 3)),
     _bounds(bounds),

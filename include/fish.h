@@ -11,7 +11,7 @@ static constexpr int ANIM_FRAMES = 4;
 
 class fish {
     public:
-        fish(bn::rect bounds, arrow start_vel={.5, .5});
+        fish(bn::fixed_point start_position, bn::rect bounds, arrow start_vel={.5, .5});
         void update();
         bn::rect hitbox();
     private:
