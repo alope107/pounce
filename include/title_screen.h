@@ -3,7 +3,7 @@
 #include <bn_regular_bg_ptr.h>
 #include <bn_sprite_animate_actions.h>
 #include <bn_vector.h>
-#include "bn_sound_handle.h"
+#include <bn_sound_handle.h>
 
 #include "game.h"
 #include "lily.h"
@@ -16,7 +16,7 @@ class title_screen : public game {
         title_screen();
         ~title_screen();
         GAME_TYPE update();
-        
+
     private:
         bn::regular_bg_ptr _bg;
         // Maybe make Frito + animation her own class?

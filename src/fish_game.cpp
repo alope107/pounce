@@ -9,6 +9,7 @@
 
 #include "bn_sprite_items_debug_dot.h"
 #include "bn_regular_bg_items_bottomofpond.h"
+#include "bn_sound_items.h"
 
 static constexpr bool DEBUG_DOT = false;
 
@@ -19,7 +20,8 @@ fish_game::fish_game(game_state& state, bn::random& rng) :
     _rng(rng),
     // _arm(bn::rect(-30, -30, 30, 30), {-30, -30}),
     _simple_arm(*this, bn::rect(0, -60, 220, 60)),
-    _timer(GAME_DUR)
+    _timer(GAME_DUR),
+    _song(bn::sound_items::gonefishin.play())
      {
         for(int i = 0; i < 10; i++) {
             _fishes.push_back(fish(
@@ -61,6 +63,14 @@ GAME_TYPE fish_game::update() {
     for (auto g : _grabbeds) {
         g.update();
     }
+
+    if(!_song.active()) {
+        _song = bn::sound_items::gonefishin.play();
+    }
     
     return GAME_TYPE::FISH_GAME;
+}
+
+fish_game::~fish_game() {
+    _song.stop();
 }

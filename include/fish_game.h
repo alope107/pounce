@@ -3,6 +3,8 @@
 #include <bn_regular_bg_ptr.h>
 #include <bn_vector.h>
 #include <bn_random.h>
+#include <bn_sound_handle.h>
+
 #include "fish.h"
 #include "arm.h"
 #include "simple_arm.h"
@@ -11,11 +13,13 @@
 #include "fish_stack.h"
 #include "timer.h"
 
+
 static constexpr int GAME_DUR = 1799;
 
 class fish_game : public game {
     public:
         fish_game(game_state& state, bn::random& rng);
+        ~fish_game();
         GAME_TYPE update();
     private:
         game_state& _state;
@@ -26,4 +30,5 @@ class fish_game : public game {
         bn::vector<fish, MAX_FISH> _fishes;
         bn::vector<grabbed, MAX_FISH> _grabbeds;
         timer _timer;
+        bn::sound_handle _song;
 };
