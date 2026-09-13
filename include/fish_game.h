@@ -9,6 +9,9 @@
 #include "game.h"
 #include "grabbed.h"
 #include "fish_stack.h"
+#include "timer.h"
+
+static constexpr int GAME_DUR = 3599;
 
 class fish_game : public game {
     public:
@@ -22,4 +25,5 @@ class fish_game : public game {
         simple_arm _simple_arm;
         bn::vector<fish, MAX_FISH> _fishes;
         bn::vector<grabbed, MAX_FISH> _grabbeds;
+        timer _timer;
 };

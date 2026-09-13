@@ -18,7 +18,8 @@ fish_game::fish_game(game_state& state, bn::random& rng) :
     _debug_dot(bn::sprite_items::debug_dot.create_sprite(-100, -100)),
     _rng(rng),
     // _arm(bn::rect(-30, -30, 30, 30), {-30, -30}),
-    _simple_arm(*this, bn::rect(0, -60, 220, 60))
+    _simple_arm(*this, bn::rect(0, -60, 220, 60)),
+    _timer(GAME_DUR)
      {
         for(int i = 0; i < 10; i++) {
             _fishes.push_back(fish(
@@ -33,7 +34,8 @@ fish_game::fish_game(game_state& state, bn::random& rng) :
 
 
 GAME_TYPE fish_game::update() {
-    if(bn::keypad::select_pressed()) {
+    _timer.update();
+    if(bn::keypad::select_pressed() || _timer.frames_left() == 0) {
         return GAME_TYPE::END_SCREEN;
     }
     _simple_arm.update();
@@ -59,5 +61,6 @@ GAME_TYPE fish_game::update() {
     for (auto g : _grabbeds) {
         g.update();
     }
+    
     return GAME_TYPE::FISH_GAME;
 }
