@@ -11,7 +11,7 @@
 #include "fish_stack.h"
 #include "timer.h"
 
-static constexpr int GAME_DUR = 3599;
+static constexpr int GAME_DUR = 1799;
 
 class fish_game : public game {
     public:
