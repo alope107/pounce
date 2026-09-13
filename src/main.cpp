@@ -30,15 +30,6 @@ int main()
 
     GAME_TYPE current_game_type = GAME_TYPE::TITLE_SCREEN;
 
-    bn::sprite_font font = fuzzyfont;
-    bn::sprite_text_generator text_generator(font);
-    text_generator.set_alignment(bn::sprite_text_generator::alignment_type::CENTER);
-
-    bn::vector<bn::sprite_ptr, 20> text_sprs;
-    text_generator.generate({0, 50}, "PRESS A", text_sprs);
-    text_generator.generate({0, 68}, "TO START", text_sprs);
-
-
     while (true)
     {
         GAME_TYPE new_game_type = g->update();

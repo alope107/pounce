@@ -20,4 +20,5 @@ class title_screen : public game {
         bn::sprite_ptr _frito_spr;
         bn::sprite_animate_action<FRITO_BUTT_FRAMES> _frito_anim;
         bn::vector<lily, TITLE_LILY_COUNT> _lillies;
+        bn::vector<bn::sprite_ptr, 20> _text_sprs;
 };

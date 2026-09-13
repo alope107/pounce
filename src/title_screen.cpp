@@ -1,11 +1,14 @@
 #include "title_screen.h"
 
 #include <bn_keypad.h>
+#include <bn_sprite_text_generator.h>
 
 #include "bn_sprite_items_fritobuttshake.h"
 #include "bn_sprite_items_lilypad1.h"
 #include "bn_sprite_items_lilypad2.h"
 #include "bn_regular_bg_items_background.h"
+
+#include "fuzzyfont.h"
 
 static constexpr bn::fixed_point FRITO_TITLE_POS = {0, -25};
 static constexpr int FRITO_BUTT_DELAY = 18;
@@ -22,6 +25,11 @@ title_screen::title_screen() :
     _lillies() {
         _lillies.push_back(lily({30, 12}, {0, 0}, .7, 20));
         _lillies.push_back(lily({-25, 26}, {0, 0}, 1));
+
+        bn::sprite_text_generator text_generator(fuzzyfont);
+        text_generator.set_alignment(bn::sprite_text_generator::alignment_type::CENTER);
+        text_generator.generate({0, 68}, "PRESS A", _text_sprs);
+
 }
 
 GAME_TYPE title_screen::update() {
