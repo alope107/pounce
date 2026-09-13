@@ -2,6 +2,7 @@
 
 #include <bn_rect.h>
 #include <bn_log.h>
+#include <bn_assert.h>
 
 #include "screen_utils.h"
 
@@ -9,16 +10,70 @@
 
 #include "bn_sprite_tiles_item.h"
 
+
+
 namespace {
-    static const bn::sprite_tiles_item tiles = bn::sprite_items::snack.tiles_item();
     static constexpr int FISH_WIDTH = 16;
     static constexpr int FISH_HEIGHT = 16;
 }
 
-fish::fish(bn::fixed_point start_position, bn::rect bounds, arrow start_vel) :
-    _spr(bn::sprite_items::snack.create_sprite(start_position)),
+bn::sprite_animate_action<MAX_FISH_FRAMES> make_fish_anim(bn::sprite_ptr spr, FISH_TYPE fish_type) {
+    auto item = FISH_TABLE[fish_type].alive;
+    int delay = 9; // TODO: configure per fish?
+
+    // will be overwritten
+    // TODO: more elegant way?
+    bn::sprite_animate_action<MAX_FISH_FRAMES> anim = bn::create_sprite_animate_action_forever(
+                spr,
+                delay,
+                item.tiles_item(),
+                0,1,2,3,4,5,6,7
+            );;
+
+    // Todo: proprely expand anim frames instead of hard coding
+    switch (fish_type) {
+        case FISH_TYPE::SNACK:
+            anim = bn::create_sprite_animate_action_forever(
+                spr,
+                delay,
+                item.tiles_item(),
+                0,1,2,3,4,5,6,7
+            );
+            break;
+        case FISH_TYPE::SALMON:
+            anim = bn::create_sprite_animate_action_forever(
+                spr,
+                delay,
+                item.tiles_item(),
+                0,1,2
+            );
+            break;
+        case FISH_TYPE::PUFFER:
+            anim = bn::create_sprite_animate_action_forever(
+                spr,
+                delay,
+                item.tiles_item(),
+                0,1,2,3,4,5,6,7,8,9
+            );
+            break;
+        case FISH_TYPE::GOLDFISH:
+            anim = bn::create_sprite_animate_action_forever(
+                spr,
+                delay,
+                item.tiles_item(),
+                0,1,2
+            );
+            break;
+        default:
+            BN_ASSERT(false, "Unknown fish type");
+    }
+    return anim;
+}
+
+fish::fish(bn::fixed_point start_position, FISH_TYPE fish_type, bn::rect bounds, arrow start_vel) :
+    _spr(FISH_TABLE[fish_type].alive.create_sprite(start_position)),
     // TODO: std::apply or macro to expand animation frames?
-    _anim(bn::create_sprite_animate_action_forever(_spr, 9, bn::sprite_items::snack.tiles_item(), 0, 1, 2, 3)),
+    _anim(make_fish_anim(_spr, fish_type)),
     _bounds(bounds),
     _vel(start_vel) {
 }
