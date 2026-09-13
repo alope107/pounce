@@ -8,17 +8,6 @@ fish_stack::fish_stack(bn::fixed_point base_pos, game_state& state) :
     _fishes(),
     _currently_stacked(0),
     _frame(0) {
-    _fishes = {};
-
-    // TODO: get from actual gameplay
-
-    // for(int i = 0; i < caught.size(); i++) {
-    //     auto fish = FISH_TABLE[caught[i]];
-    //     _fishes.push_back(fish.dead.create_sprite(
-    //         base_pos  - bn::fixed_point{0, 6*i}
-    //     ));
-    // }
-
 }
 
 void fish_stack::update() {
