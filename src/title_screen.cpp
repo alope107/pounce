@@ -11,6 +11,7 @@
 #include "fuzzyfont.h"
 
 #include "bn_sound_items.h"
+#include "bn_sprite_items_title.h"
 
 static constexpr bn::fixed_point FRITO_TITLE_POS = {0, -25};
 static constexpr int FRITO_BUTT_DELAY = 18;
@@ -25,7 +26,8 @@ title_screen::title_screen() :
                 bn::sprite_items::fritobuttshake.tiles_item(),
                 0,1,2,3,4,5)),
     _lillies(),
-    _song(bn::sound_items::talkingcute.play()) {
+    _song(bn::sound_items::talkingcute.play()),
+    _title(bn::sprite_items::title.create_sprite({-90, -50})) {
         _lillies.push_back(lily({30, 12}, {0, 0}, .7, 20));
         _lillies.push_back(lily({-25, 26}, {0, 0}, 1));
 
