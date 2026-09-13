@@ -25,4 +25,5 @@ class title_screen : public game {
         bn::vector<lily, TITLE_LILY_COUNT> _lillies;
         bn::vector<bn::sprite_ptr, 20> _text_sprs;
         bn::sound_handle _song;
+        bn::sprite_ptr _title;
 };
