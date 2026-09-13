@@ -8,8 +8,7 @@
 #include "simple_arm.h"
 #include "game.h"
 #include "grabbed.h"
-
-static constexpr int MAX_FISH = 10;
+#include "fish_stack.h"
 
 class fish_game : public game {
     public:
