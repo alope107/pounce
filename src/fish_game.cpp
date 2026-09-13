@@ -22,6 +22,7 @@ fish_game::fish_game(bn::random rng) :
         for(int i = 0; i < 10; i++) {
             _fishes.push_back(fish(
                 {rng.get_fixed(-120, 120), rng.get_fixed(-80, 80)},
+                static_cast<FISH_TYPE>(rng.get_int(4)),
                 bn::rect(0, 0, 240, 160),
                 {_rng.get_fixed(-1, 1), _rng.get_fixed(-1, 1)}
             ));
@@ -32,7 +33,7 @@ fish_game::fish_game(bn::random rng) :
 
 GAME_TYPE fish_game::update() {
     if(bn::keypad::select_pressed()) {
-        return GAME_TYPE::TITLE_SCREEN;
+        return GAME_TYPE::END_SCREEN;
     }
     _simple_arm.update();
     auto paw_hitbox = _simple_arm.hitbox();

@@ -7,6 +7,7 @@
 
 #include "jump_game.h"
 #include "fish_game.h"
+#include "end_screen.h"
 
 #include "bn_sprite_items_snack.h"
 #include "bn_sprite_items_fritobuttshake.h"
@@ -54,6 +55,9 @@ int main()
                 break;
             case GAME_TYPE::JUMP_GAME: // Currently unused
                 g = bn::make_unique<jump_game>();
+                break;
+            case GAME_TYPE::END_SCREEN:
+                g = bn::make_unique<end_screen>();
                 break;
             default:
                 BN_ASSERT(false, "Got unknown game type");
