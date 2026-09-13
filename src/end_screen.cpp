@@ -19,14 +19,8 @@ end_screen::end_screen(game_state& state) :
         bn::sprite_items::fritojump.tiles_item(),
         0,1,2,3,4,5,6,7,8,9,10,11
     )),
-    _stack(bn::fixed_point{-50, 30}, _state) {
-    if(_state.caught().size() < HAPPY_THRESH) {
-        bn::sound_items::losetrumpet.play();
-    } else if (_state.caught().size() < EXCITED_THRESH) {
-        bn::sound_items::positive.play();
-    } else {
-        bn::sound_items::won.play();
-    }
+    _stack(bn::fixed_point{-50, 30}, _state),
+    _jingle_started(false) {
 }
 
 GAME_TYPE end_screen::update() {
@@ -35,6 +29,17 @@ GAME_TYPE end_screen::update() {
        bn::keypad::start_pressed()) {
         // Todo: transition animation
         return GAME_TYPE::TITLE_SCREEN;
+    }
+
+    if(!_jingle_started && _stack.done_stacking()) {
+        _jingle_started = true;
+            if(_state.caught().size() < HAPPY_THRESH) {
+            bn::sound_items::losetrumpet.play();
+        } else if (_state.caught().size() < EXCITED_THRESH) {
+            bn::sound_items::positive.play();
+        } else {
+            bn::sound_items::won.play();
+        }
     }
 
     _frito_anim.update();

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <bn_vector.h>
+#include <bn_sound_handle.h>
 
 #include "fish.h"
 #include "game.h"
@@ -16,4 +17,5 @@ class fish_stack {
         bn::vector<bn::sprite_ptr, MAX_FISH> _fishes;
         int _currently_stacked;
         int _frame;
+        bn::sound_handle _sound;
 };

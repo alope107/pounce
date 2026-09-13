@@ -22,4 +22,5 @@ class end_screen : public game {
         bn::sprite_ptr _frito_spr;
         bn::sprite_animate_action<FRITO_JUMP_FRAMES> _frito_anim;
         fish_stack _stack;
+        bool _jingle_started;
 };
