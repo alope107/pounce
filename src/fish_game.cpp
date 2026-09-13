@@ -12,7 +12,7 @@
 
 static constexpr bool DEBUG_DOT = false;
 
-fish_game::fish_game(game_state& state, bn::random rng) :
+fish_game::fish_game(game_state& state, bn::random& rng) :
     _state(state),
     _bg(bn::regular_bg_items::bottomofpond.create_bg()),
     _debug_dot(bn::sprite_items::debug_dot.create_sprite(-100, -100)),

@@ -12,13 +12,13 @@
 
 class fish_game : public game {
     public:
-        fish_game(game_state& state, bn::random rng);
+        fish_game(game_state& state, bn::random& rng);
         GAME_TYPE update();
     private:
         game_state& _state;
         bn::regular_bg_ptr _bg;
         bn::sprite_ptr _debug_dot;
-        bn::random _rng;
+        bn::random& _rng;
         simple_arm _simple_arm;
         bn::vector<fish, MAX_FISH> _fishes;
         bn::vector<grabbed, MAX_FISH> _grabbeds;

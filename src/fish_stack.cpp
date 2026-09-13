@@ -1,23 +1,39 @@
 #include "fish_stack.h"
 
-fish_stack::fish_stack(bn::fixed_point base_pos, bn::vector<FISH_TYPE, MAX_FISH> caught) {
+static constexpr int STACK_DELAY = 20;
+
+fish_stack::fish_stack(bn::fixed_point base_pos, game_state& state) :
+    _base_pos(base_pos),
+    _state(state),
+    _fishes(),
+    _currently_stacked(0),
+    _frame(0) {
     _fishes = {};
 
     // TODO: get from actual gameplay
-    // caught.push_back(FISH_TYPE::GOLDFISH);
-    // caught.push_back(FISH_TYPE::PUFFER);
-    // caught.push_back(FISH_TYPE::SNACK);
-    // caught.push_back(FISH_TYPE::SALMON);
-    // caught.push_back(FISH_TYPE::GOLDFISH);
 
-    for(int i = 0; i < caught.size(); i++) {
-        auto fish = FISH_TABLE[caught[i]];
-        _fishes.push_back(fish.dead.create_sprite(
-            base_pos  - bn::fixed_point{0, 6*i}
-        ));
-    }
+    // for(int i = 0; i < caught.size(); i++) {
+    //     auto fish = FISH_TABLE[caught[i]];
+    //     _fishes.push_back(fish.dead.create_sprite(
+    //         base_pos  - bn::fixed_point{0, 6*i}
+    //     ));
+    // }
+
 }
 
 void fish_stack::update() {
-    // TODO: stacking animatiom
+    if(!done_stacking()) {
+        _frame++;
+        if(_frame == STACK_DELAY) {
+            _frame = 0;
+            auto fish = FISH_TABLE[_state.caught()[_currently_stacked]];
+            _fishes.push_back(fish.dead.create_sprite(
+                _base_pos  - bn::fixed_point{0, 6*_currently_stacked++}
+        ));
+        }
+    }
+}
+
+bool fish_stack::done_stacking() {
+    return _currently_stacked == _state.caught().size();
 }
