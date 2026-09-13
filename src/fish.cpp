@@ -73,34 +73,18 @@ bn::sprite_animate_action<MAX_FISH_FRAMES> make_fish_anim(bn::sprite_ptr spr, FI
 fish::fish(bn::fixed_point start_position, FISH_TYPE fish_type, bn::rect bounds, arrow start_vel) :
     _fish_type(fish_type),
     _spr(FISH_TABLE[fish_type].alive.create_sprite(start_position)),
-    // TODO: std::apply or macro to expand animation frames?
     _anim(make_fish_anim(_spr, fish_type)),
     _bounds(bounds),
     _vel(start_vel) {
+        _spr.set_z_order(100);
+        // _anim = make_fish_anim(_spr, fish_type);
 }
 
 void fish::update() {
     bn::fixed_point new_pos = _spr.position() + _vel;
 
-    // if(new_pos.x() > _bounds.right() ) {
-    //     new_pos.set_x(_bounds.right());
-    //     _vel.set_x(_vel.x() * -1);
-    // }
-    // if(new_pos.x() < _bounds.left()) {
-    //     new_pos.set_x(_bounds.left());
-    //     _vel.set_x(_vel.x() * -1);
-    // }
-    // if(new_pos.y() > _bounds.bottom()) {
-    //     new_pos.set_y(_bounds.bottom());
-    //     _vel.set_y(_vel.y() * -1);
-    // }
-    // if(new_pos.y() < _bounds.top()) {
-    //     new_pos.set_y(_bounds.top());
-    //     _vel.set_y(_vel.y() * -1);
-    // }
 
     _spr.set_position(new_pos);
-    // _spr.set_rotation_angle_safe(arrow_to_degrees({_vel.x(), -_vel.y()}));
     _anim.update();
 }
 
