@@ -17,7 +17,7 @@ end_screen::end_screen() :
         bn::sprite_items::fritojump.tiles_item(),
         0,1,2,3,4,5,6,7,8,9,10,11
     )),
-    _stack(bn::fixed_point{-50, 0}, {}) {
+    _stack(bn::fixed_point{-50, 30}, {}) {
 }
 
 GAME_TYPE end_screen::update() {
