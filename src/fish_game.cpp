@@ -41,7 +41,7 @@ GAME_TYPE fish_game::update() {
     if(bn::keypad::select_pressed() || _timer.frames_left() == 0) {
         return GAME_TYPE::END_SCREEN;
     }
-    if(_rng.get_int(1000) < 30) {
+    if(_rng.get_int(1000) < 24) {
         bn::fixed_point pos = {_rng.get_fixed(60), _rng.get_fixed(60)};
         arrow vel = {_rng.get_fixed(1), _rng.get_fixed(1)};
 
