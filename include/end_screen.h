@@ -8,8 +8,8 @@
 
 static constexpr int FRITO_JUMP_FRAMES = 12;
 
-static constexpr int HAPPY_THRESH = 1;//5;
-static constexpr int EXCITED_THRESH = 2;//8;
+static constexpr int HAPPY_THRESH = 5;
+static constexpr int EXCITED_THRESH = 10;
 
 class end_screen : public game {
     public:

@@ -49,6 +49,7 @@ class fish {
         void update();
         bn::rect hitbox();
         FISH_TYPE fish_type();
+        bool far_out(int thresh);
     private:
         FISH_TYPE _fish_type;
         bn::sprite_ptr _spr;

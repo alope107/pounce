@@ -36,9 +36,29 @@ fish_game::fish_game(game_state& state, bn::random& rng) :
 
 
 GAME_TYPE fish_game::update() {
+    int thresh = 60;
     _timer.update();
     if(bn::keypad::select_pressed() || _timer.frames_left() == 0) {
         return GAME_TYPE::END_SCREEN;
+    }
+    if(_rng.get_int(1000) < 30) {
+        bn::fixed_point pos = {_rng.get_fixed(60), _rng.get_fixed(60)};
+        arrow vel = {_rng.get_fixed(1), _rng.get_fixed(1)};
+
+        bn::fixed_point flips = {
+            _rng.get_bool() ? -120-thresh : 120,
+            _rng.get_bool() ? -80-thresh : 80,
+        };
+
+        pos += flips;
+        vel = {vel.x() * pos.x() > 0 ? -1 : 1,
+              vel.y() *  pos.y() > 0 ? -1 : 1};
+        _fishes.push_back(fish(
+                pos,
+                static_cast<FISH_TYPE>(_rng.get_int(4)),
+                bn::rect(0, 0, 240, 160),
+                vel
+            ));
     }
     _simple_arm.update();
     auto paw_hitbox = _simple_arm.hitbox();
@@ -56,7 +76,10 @@ GAME_TYPE fish_game::update() {
                 BN_LOG("hit!");
                 //_grabbeds.push_back(grabbed(_simple_arm, {-100, -100}));
                 //_simple_arm.set_state(arm_state::RETURNING);
-        } else {
+        } else if(f.far_out(thresh)) {
+            it = _fishes.erase(it);
+        }
+        else {
             it++;
         }
     }

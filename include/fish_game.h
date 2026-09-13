@@ -14,7 +14,7 @@
 #include "timer.h"
 
 
-static constexpr int GAME_DUR = 300;//1799;
+static constexpr int GAME_DUR = 1799;
 
 class fish_game : public game {
     public:

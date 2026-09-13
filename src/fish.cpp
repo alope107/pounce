@@ -82,22 +82,22 @@ fish::fish(bn::fixed_point start_position, FISH_TYPE fish_type, bn::rect bounds,
 void fish::update() {
     bn::fixed_point new_pos = _spr.position() + _vel;
 
-    if(new_pos.x() > _bounds.right()) {
-        new_pos.set_x(_bounds.right());
-        _vel.set_x(_vel.x() * -1);
-    }
-    if(new_pos.x() < _bounds.left()) {
-        new_pos.set_x(_bounds.left());
-        _vel.set_x(_vel.x() * -1);
-    }
-    if(new_pos.y() > _bounds.bottom()) {
-        new_pos.set_y(_bounds.bottom());
-        _vel.set_y(_vel.y() * -1);
-    }
-    if(new_pos.y() < _bounds.top()) {
-        new_pos.set_y(_bounds.top());
-        _vel.set_y(_vel.y() * -1);
-    }
+    // if(new_pos.x() > _bounds.right() ) {
+    //     new_pos.set_x(_bounds.right());
+    //     _vel.set_x(_vel.x() * -1);
+    // }
+    // if(new_pos.x() < _bounds.left()) {
+    //     new_pos.set_x(_bounds.left());
+    //     _vel.set_x(_vel.x() * -1);
+    // }
+    // if(new_pos.y() > _bounds.bottom()) {
+    //     new_pos.set_y(_bounds.bottom());
+    //     _vel.set_y(_vel.y() * -1);
+    // }
+    // if(new_pos.y() < _bounds.top()) {
+    //     new_pos.set_y(_bounds.top());
+    //     _vel.set_y(_vel.y() * -1);
+    // }
 
     _spr.set_position(new_pos);
     // _spr.set_rotation_angle_safe(arrow_to_degrees({_vel.x(), -_vel.y()}));
@@ -112,4 +112,12 @@ bn::rect fish::hitbox() {
 
 FISH_TYPE fish::fish_type() {
     return _fish_type;
+}
+
+bool fish::far_out(int thresh) {
+    auto new_pos = _spr.position();
+    return new_pos.x() > _bounds.right()+ thresh ||
+           new_pos.x() < _bounds.left() - thresh ||
+           new_pos.y() > _bounds.bottom() + thresh ||
+           new_pos.y() < _bounds.top() - thresh;
 }
