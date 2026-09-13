@@ -32,7 +32,7 @@ fish_game::fish_game(bn::random rng) :
 
 GAME_TYPE fish_game::update() {
     if(bn::keypad::select_pressed()) {
-        return GAME_TYPE::TITLE_SCREEN;
+        return GAME_TYPE::END_SCREEN;
     }
     _simple_arm.update();
     auto paw_hitbox = _simple_arm.hitbox();

@@ -3,6 +3,7 @@
 enum GAME_TYPE {
     TITLE_SCREEN,
     FISH_GAME,
+    END_SCREEN,
     JUMP_GAME
 };
 
