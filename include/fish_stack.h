@@ -4,8 +4,7 @@
 
 #include "fish.h"
 
-// TODO: put this in a better spot
-static constexpr int MAX_FISH = 100;
+
 
 class fish_stack {
     public:

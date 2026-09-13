@@ -15,6 +15,9 @@
 #include <bn_sprite_items_realgoldfish.h>
 #include <bn_sprite_items_deadgoldfish.h>
 
+// TODO: put this in a better spot
+static constexpr int MAX_FISH = 100;
+
 enum FISH_TYPE {
     SNACK,
     SALMON,
@@ -45,7 +48,9 @@ class fish {
         fish(bn::fixed_point start_position, FISH_TYPE fish_type, bn::rect bounds, arrow start_vel={.5, .5});
         void update();
         bn::rect hitbox();
+        FISH_TYPE fish_type();
     private:
+        FISH_TYPE _fish_type;
         bn::sprite_ptr _spr;
         // Use cached animation? Or seomthing else?
         // This feels heavyweight

@@ -12,9 +12,10 @@
 
 class fish_game : public game {
     public:
-        fish_game(bn::random rng);
+        fish_game(game_state& state, bn::random rng);
         GAME_TYPE update();
     private:
+        game_state& _state;
         bn::regular_bg_ptr _bg;
         bn::sprite_ptr _debug_dot;
         bn::random _rng;

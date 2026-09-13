@@ -8,7 +8,8 @@
 static constexpr bn::fixed_point FRITO_END_POS = {0, 0};
 static constexpr int FRITO_JUMP_DELAY = 18;
 
-end_screen::end_screen() :
+end_screen::end_screen(game_state& state) :
+    _state(state),
     _bg(bn::regular_bg_items::endscreen.create_bg()),
     _frito_spr(bn::sprite_items::fritojump.create_sprite(FRITO_END_POS)),
     _frito_anim(bn::create_sprite_animate_action_forever(
@@ -17,7 +18,7 @@ end_screen::end_screen() :
         bn::sprite_items::fritojump.tiles_item(),
         0,1,2,3,4,5,6,7,8,9,10,11
     )),
-    _stack(bn::fixed_point{-50, 30}, {}) {
+    _stack(bn::fixed_point{-50, 30}, _state.caught()) {
 }
 
 GAME_TYPE end_screen::update() {
