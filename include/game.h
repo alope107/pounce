@@ -1,5 +1,7 @@
 #pragma once
 
+#include "game_state.h"
+
 enum GAME_TYPE {
     TITLE_SCREEN,
     FISH_GAME,

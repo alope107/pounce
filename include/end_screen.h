@@ -10,9 +10,10 @@ static constexpr int FRITO_JUMP_FRAMES = 12;
 
 class end_screen : public game {
     public:
-        end_screen();
+        end_screen(game_state& state);
         GAME_TYPE update();
     private:
+        game_state& _state;
         bn::regular_bg_ptr _bg;
         // Maybe make Frito + animation her own class?
         bn::sprite_ptr _frito_spr;

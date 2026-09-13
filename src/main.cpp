@@ -20,6 +20,7 @@
 #include "title_screen.h"
 #include "bn_unique_ptr.h"
 #include "fuzzyfont.h"
+#include "game_state.h"
 
 int main()
 {
@@ -29,6 +30,8 @@ int main()
     bn::unique_ptr<game> g = bn::make_unique<title_screen>();
 
     GAME_TYPE current_game_type = GAME_TYPE::TITLE_SCREEN;
+
+    game_state state;
 
     while (true)
     {
@@ -42,13 +45,14 @@ int main()
                 g = bn::make_unique<title_screen>();
                 break;
             case GAME_TYPE::FISH_GAME:
-                g = bn::make_unique<fish_game>(rng);
+                state = game_state(); // Clear out state for new game
+                g = bn::make_unique<fish_game>(state, rng);
                 break;
             case GAME_TYPE::JUMP_GAME: // Currently unused
                 g = bn::make_unique<jump_game>();
                 break;
             case GAME_TYPE::END_SCREEN:
-                g = bn::make_unique<end_screen>();
+                g = bn::make_unique<end_screen>(state);
                 break;
             default:
                 BN_ASSERT(false, "Got unknown game type");

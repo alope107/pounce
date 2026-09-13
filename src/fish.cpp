@@ -71,6 +71,7 @@ bn::sprite_animate_action<MAX_FISH_FRAMES> make_fish_anim(bn::sprite_ptr spr, FI
 }
 
 fish::fish(bn::fixed_point start_position, FISH_TYPE fish_type, bn::rect bounds, arrow start_vel) :
+    _fish_type(fish_type),
     _spr(FISH_TABLE[fish_type].alive.create_sprite(start_position)),
     // TODO: std::apply or macro to expand animation frames?
     _anim(make_fish_anim(_spr, fish_type)),
@@ -107,4 +108,8 @@ bn::rect fish::hitbox() {
     // TODO: if there are multiple collision checks per frame we will want to cache the hitbox
     return bn::rect(round_fixed_point(_spr.position()),
                               {FISH_WIDTH, FISH_HEIGHT});
+}
+
+FISH_TYPE fish::fish_type() {
+    return _fish_type;
 }

@@ -12,7 +12,8 @@
 
 static constexpr bool DEBUG_DOT = false;
 
-fish_game::fish_game(bn::random rng) :
+fish_game::fish_game(game_state& state, bn::random rng) :
+    _state(state),
     _bg(bn::regular_bg_items::bottomofpond.create_bg()),
     _debug_dot(bn::sprite_items::debug_dot.create_sprite(-100, -100)),
     _rng(rng),
@@ -46,6 +47,7 @@ GAME_TYPE fish_game::update() {
         fish& f = *it;
         f.update();
         if(paw_hitbox.has_value() && f.hitbox().intersects(*paw_hitbox)) {
+                _state.catch_fish(f.fish_type());
                 it = _fishes.erase(it);// Maybe inefficient to do with vector? Probably small enough it doesn't matter
                 BN_LOG("hit!");
                 //_grabbeds.push_back(grabbed(_simple_arm, {-100, -100}));
