@@ -3,6 +3,8 @@
 #include <bn_keypad.h>
 
 #include "bn_sprite_items_fritojump.h"
+#include "bn_sprite_items_sadfrito.h"
+#include "bn_sprite_items_happyfrito.h"
 #include "bn_regular_bg_items_endscreen.h"
 #include "bn_sound_items.h"
 
@@ -21,6 +23,24 @@ end_screen::end_screen(game_state& state) :
     )),
     _stack(bn::fixed_point{-50, 30}, _state),
     _jingle_started(false) {
+
+    if(_state.caught().size() < HAPPY_THRESH) {
+        _frito_spr = bn::sprite_items::sadfrito.create_sprite(FRITO_END_POS);
+        _frito_anim =bn::create_sprite_animate_action_forever(
+            _frito_spr,
+            FRITO_JUMP_DELAY,
+            bn::sprite_items::sadfrito.tiles_item(),
+            0,1,2,3,4,5,6,7
+        );
+    } else if (_state.caught().size() < EXCITED_THRESH) {
+        _frito_spr = bn::sprite_items::happyfrito.create_sprite(FRITO_END_POS);
+        _frito_anim =bn::create_sprite_animate_action_forever(
+            _frito_spr,
+            FRITO_JUMP_DELAY,
+            bn::sprite_items::happyfrito.tiles_item(),
+            0,1,2,3,4,5,6
+        );
+    } 
 }
 
 GAME_TYPE end_screen::update() {
@@ -33,7 +53,7 @@ GAME_TYPE end_screen::update() {
 
     if(!_jingle_started && _stack.done_stacking()) {
         _jingle_started = true;
-            if(_state.caught().size() < HAPPY_THRESH) {
+        if(_state.caught().size() < HAPPY_THRESH) {
             bn::sound_items::losetrumpet.play();
         } else if (_state.caught().size() < EXCITED_THRESH) {
             bn::sound_items::positive.play();
