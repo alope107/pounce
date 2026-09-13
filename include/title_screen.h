@@ -7,6 +7,7 @@
 
 #include "game.h"
 #include "lily.h"
+#include "flower.h"
 
 static constexpr int FRITO_BUTT_FRAMES = 6;
 static constexpr int TITLE_LILY_COUNT = 4;
@@ -26,4 +27,5 @@ class title_screen : public game {
         bn::vector<bn::sprite_ptr, 20> _text_sprs;
         bn::sound_handle _song;
         bn::sprite_ptr _title;
+        bn::vector<flower, 4> _flowers;
 };

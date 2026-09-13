@@ -31,6 +31,11 @@ title_screen::title_screen() :
         _lillies.push_back(lily({30, 12}, {0, 0}, .7, 20));
         _lillies.push_back(lily({-25, 26}, {0, 0}, 1));
 
+        _flowers.push_back(flower({-90, 45}));
+        _flowers.push_back(flower({-60, 55}));
+        _flowers.push_back(flower({100, 30}));
+        _flowers.push_back(flower({60, 50}));
+
         bn::sprite_text_generator text_generator(fuzzyfont);
         text_generator.set_alignment(bn::sprite_text_generator::alignment_type::CENTER);
         text_generator.generate({0, 68}, "PRESS A", _text_sprs);
@@ -47,6 +52,10 @@ GAME_TYPE title_screen::update() {
     _frito_anim.update();
     for(auto &lil : _lillies) {
         lil.update();
+    }
+
+    for(auto& flow : _flowers) {
+        flow.update();
     }
 
     if(!_song.active()) {
